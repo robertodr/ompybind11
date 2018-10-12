@@ -38,7 +38,9 @@ double calc_pi(int n) {
 };
 
 PYBIND11_MODULE(ompybind11, m) {
-  m.def("eval_func", &eval_func), py::arg("rank"), py::arg("function"),
+  m.def("eval_func", &eval_func, py::arg("rank"), py::arg("function"),
         py::arg("x"))
+      .def("do", [](std::function<double(double)> f, double x) { return f(x); },
+           py::arg("function"), py::arg("x"))
       .def("calc_pi", &calc_pi);
 }
