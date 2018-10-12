@@ -5,7 +5,15 @@ sys.path.append(os.getenv('OMPYBIND11_MODULE_PATH'))
 import ompybind11  # isort:skip
 
 done = ompybind11.do(function=(lambda x: x + 40.0), x=2.0)
-print('ompybind11.do(function=(lambda x: x + 40.0), x=2.0) returned {}'.format(done))
+print('ompybind11.do(function=(lambda x: x + 40.0), x=2.0) returned {}'.format(
+    done))
+
+# This reproduces 1525
+#from concurrent.futures import ThreadPoolExecutor # isort:skip
+#with ThreadPoolExecutor(max_workers=2) as e:
+#    e.submit(ompybind11.do, lambda x: x + 40.0, 2.0)
+#    e.submit(ompybind11.do, lambda x: x + 40.0, 2.0)
+
 
 def f(x):
     return x * x
